@@ -4,14 +4,9 @@ server.on("request", (req, res) => {
     let requestContent = "";
 
     req.on("data", (chunk) => {
-        console.log("data");
         requestContent += chunk;
     });
     req.on("close", () => {
-        console.log("req closed");
-        console.log("method:", req.method);
-        console.log("url:", req.url);
-        console.log("raw headers:", req.rawHeaders);
         console.log("request content:", requestContent);
     });
     if (req.method !== "POST" || req.url !== "/webhook") {
