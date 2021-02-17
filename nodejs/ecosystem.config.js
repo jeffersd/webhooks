@@ -13,5 +13,6 @@ module.exports = {
     },
     'max_restarts': 3,
     'restart_delay': 4000,
+    time: true,
   }],
 };
