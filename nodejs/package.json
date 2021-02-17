@@ -4,7 +4,7 @@
   "description": "simple webhook server",
   "main": "index.js",
   "scripts": {
-    "test": "jest --testRegex ./test/index.js"
+    "test": "jest --testRegex ./test/index.js --coverage"
   },
   "author": "",
   "license": "ISC",
