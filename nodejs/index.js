@@ -11,8 +11,7 @@ server.on("request", (req, res) => {
         console.error("aborted:", err);
     });
     req.on("close", () => {
-        console.error("req closed");
-
+        console.log("req closed");
         console.log("method:", req.method);
         console.log("url:", req.url);
         console.log("raw headers:", req.rawHeaders);
