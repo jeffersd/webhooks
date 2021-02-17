@@ -27,7 +27,7 @@ server.on("request", (req, res) => {
         if (req.headers["x-hub-signature-256"] && isRequestPayloadValid(req.headers["x-hub-signature-256"], requestPayload)) {
             let parsed;
 
-            console.log("request content:", requestPayload);
+            console.log("payload:", requestPayload);
             try {
                 parsed = JSON.parse(requestPayload);
             } catch (parseError) {
