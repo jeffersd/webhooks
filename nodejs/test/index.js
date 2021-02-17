@@ -14,6 +14,9 @@ test("should return a 200 for a GET", () => {
 test("should return a 200 for a POST", () => {
     return request(webhook)
         .post("/")
+        .send({
+            data: "data",
+        })
         .expect(200)
         .expect("OK");
 });
