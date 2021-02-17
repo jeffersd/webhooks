@@ -22,7 +22,7 @@ server.on("request", (req, res) => {
         requestPayload += chunk;
     });
     req.on("end", () => {
-        if (isRequestPayloadValid(req.headers["x-hub-signature-256"], requestPayload)) {
+        if (req.headers["x-hub-signature-256"] && isRequestPayloadValid(req.headers["x-hub-signature-256"], requestPayload)) {
             let parsed;
 
             console.log("request content:", requestPayload);

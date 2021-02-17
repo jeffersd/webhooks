@@ -44,6 +44,13 @@ test("should return a 200 for a POST to /webhook", () => {
         .expect("OK");
 });
 
+test("should return a 401 if the request doesn't have the right header", () => {
+    return request(webhook)
+        .post("/webhook")
+        .expect(401)
+        .expect("Unauthorized");
+});
+
 test("should return a 401 if the secret was invalid", () => {
     const hashedBody = "cab4ba4116de8c5f0d9c518e6135b76caebeab057f13c2274f0081380108a4fd";
 
