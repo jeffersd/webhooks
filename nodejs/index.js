@@ -18,7 +18,7 @@ server.on("request", (req, res) => {
         console.log("request content:", requestContent);
     });
     res.writeHead(200);
-    return res.end();
+    return res.end("OK");
 });
 
 module.exports = server;
