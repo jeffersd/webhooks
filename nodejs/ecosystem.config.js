@@ -2,7 +2,6 @@ module.exports = {
   apps : [{
     name: 'webhooks',
     script: 'node server.js',
-    watch: ['./index.js', './server.js'],
     env: {
         'NODE_ENV': 'development',
         WEBHOOK_PORT: 3000,
