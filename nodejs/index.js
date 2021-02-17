@@ -1,7 +1,17 @@
-const server = require("http").createServer();
+const server = require("http").createServer(),
+    crypto = require("crypto");
+
+function isRequestPayloadValid (hashedPayload, requestPayload) {
+    const ourHash = crypto.createHmac("sha256", process.env.WEBHOOK_SECRET)
+                       .update(requestPayload)
+                       .digest(),
+        bufferHashedPayload = Buffer.from(hashedPayload, "hex");
+
+    return crypto.timingSafeEqual(ourHash, bufferHashedPayload);
+}
 
 server.on("request", (req, res) => {
-    let requestContent = "";
+    let requestPayload = "";
 
     if (req.method !== "POST" || req.url !== "/webhook") {
         res.writeHead(404);
@@ -9,21 +19,25 @@ server.on("request", (req, res) => {
     }
 
     req.on("data", (chunk) => {
-        requestContent += chunk;
+        requestPayload += chunk;
     });
     req.on("end", () => {
-        let parsed;
+        if (isRequestPayloadValid(req.headers["x-hub-signature-256"], requestPayload)) {
+            let parsed;
 
-        console.log("request content:", requestContent);
-        try {
-            parsed = JSON.parse(requestContent);
-        } catch (parseError) {
-            console.error(parseError);
-            res.writeHead(400);
-            return res.end("Bad json");
+            console.log("request content:", requestPayload);
+            try {
+                parsed = JSON.parse(requestPayload);
+            } catch (parseError) {
+                console.error(parseError);
+                res.writeHead(400);
+                return res.end("Bad json");
+            }
+            res.writeHead(200);
+            return res.end("OK");
         }
-        res.writeHead(200);
-        return res.end("OK");
+        res.writeHead(401)
+        return res.end("Unauthorized");
     });
 });
 
