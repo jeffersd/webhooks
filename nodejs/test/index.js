@@ -20,3 +20,13 @@ test("should return a 200 for a POST", () => {
         .expect(200)
         .expect("OK");
 });
+
+test("should return a 200 for a POST to /webhook", () => {
+    return request(webhook)
+        .post("/webhook")
+        .send({
+            data: "data",
+        })
+        .expect(200)
+        .expect("OK");
+});
