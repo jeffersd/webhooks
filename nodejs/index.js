@@ -1,5 +1,4 @@
-const server = require("http").createServer(),
-  PORT = 3000;
+const server = require("http").createServer();
 
 server.on("request", (req, res) => {
     let requestContent = "";
@@ -23,5 +22,4 @@ server.on("request", (req, res) => {
     return res.end();
 });
 
-console.log("listening on port:", PORT);
-server.listen(PORT);
+module.exports = server;
