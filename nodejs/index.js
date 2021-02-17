@@ -7,9 +7,6 @@ server.on("request", (req, res) => {
         console.log("data");
         requestContent += chunk;
     });
-    req.on("aborted", (err) => {
-        console.error("aborted:", err);
-    });
     req.on("close", () => {
         console.log("req closed");
         console.log("method:", req.method);
