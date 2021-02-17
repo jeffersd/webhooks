@@ -44,6 +44,19 @@ test("should return a 200 for a POST to /webhook", () => {
         .expect("OK");
 });
 
+test("should return a 200 for a POST to /webhook/", () => {
+    const hashedBody = "f5345e764d0dd7c6553bb7a6580d7f67777b03ed1ef5b8d0a7455fc006c5c7be";
+
+    return request(webhook)
+        .post("/webhook/")
+        .set({"X-Hub-Signature-256": hashedBody})
+        .send({
+            data: "content",
+        })
+        .expect(200)
+        .expect("OK");
+});
+
 test("should return a 401 if the request doesn't have the right header", () => {
     return request(webhook)
         .post("/webhook")

@@ -15,7 +15,7 @@ function isRequestPayloadValid (hashedPayload, requestPayload) {
 server.on("request", (req, res) => {
     let requestPayload = "";
 
-    if (req.method !== "POST" || req.url !== "/webhook") {
+    if (req.method !== "POST" || (req.url !== "/webhook" && req.url !== "/webhook/")) {
         res.writeHead(404);
         return res.end("Not Found");
     }
