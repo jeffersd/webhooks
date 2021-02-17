@@ -4,21 +4,18 @@ const request = require("supertest"),
 console.log = jest.fn();
 console.error = jest.fn();
 
-test("should return a 200 for a GET", () => {
+test("should return a 404 for a GET to /", () => {
     return request(webhook)
         .get("/")
-        .expect(200)
-        .expect("OK");
+        .expect(404)
+        .expect("Not Found");
 });
 
-test("should return a 200 for a POST", () => {
+test("should return a 404 for a POST to /", () => {
     return request(webhook)
         .post("/")
-        .send({
-            data: "data",
-        })
-        .expect(200)
-        .expect("OK");
+        .expect(404)
+        .expect("Not Found");
 });
 
 test("should return a 200 for a POST to /webhook", () => {

@@ -14,6 +14,10 @@ server.on("request", (req, res) => {
         console.log("raw headers:", req.rawHeaders);
         console.log("request content:", requestContent);
     });
+    if (req.method !== "POST" || req.url !== "/webhook") {
+        res.writeHead(404);
+        return res.end("Not Found");
+    }
     res.writeHead(200);
     return res.end("OK");
 });
