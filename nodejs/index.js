@@ -4,12 +4,12 @@ const server = require("http").createServer(),
 function isRequestPayloadValid (hashedPayload, requestPayload) {
     const ourHash = crypto.createHmac("sha256", process.env.WEBHOOK_SECRET)
                        .update(requestPayload)
-                       .digest(),
-        bufferHashedPayload = Buffer.from(hashedPayload, "hex");
+                       .digest("hex"),
+        ourBuffer = Buffer.from(`sha256=${ourHash}`),
+        bufferHashedPayload = Buffer.from(hashedPayload);
 
-    return hashedPayload.length === 64 &&
-        ourHash.length === bufferHashedPayload.length &&
-        crypto.timingSafeEqual(ourHash, bufferHashedPayload);
+    return ourBuffer.length === bufferHashedPayload.length &&
+        crypto.timingSafeEqual(ourBuffer, bufferHashedPayload);
 }
 
 server.on("request", (req, res) => {
