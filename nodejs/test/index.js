@@ -76,3 +76,16 @@ test("should return a 401 if the data was invalid", () => {
         .expect(401)
         .expect("Unauthorized");
 });
+
+test("should return a 401 if the hashed data is not the right length", () => {
+    const hashedBody = "f5345e764d0dd7c6553bb7a6580d7f67777b03ed1ef5b8d0a7455fc006c5c7be1";
+
+    return request(webhook)
+        .post("/webhook")
+        .set({"X-Hub-Signature-256": hashedBody})
+        .send({
+            data: "content",
+        })
+        .expect(401)
+        .expect("Unauthorized");
+});

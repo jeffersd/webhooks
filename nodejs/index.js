@@ -7,7 +7,9 @@ function isRequestPayloadValid (hashedPayload, requestPayload) {
                        .digest(),
         bufferHashedPayload = Buffer.from(hashedPayload, "hex");
 
-    return crypto.timingSafeEqual(ourHash, bufferHashedPayload);
+    return hashedPayload.length === 64 &&
+        ourHash.length === bufferHashedPayload.length &&
+        crypto.timingSafeEqual(ourHash, bufferHashedPayload);
 }
 
 server.on("request", (req, res) => {
