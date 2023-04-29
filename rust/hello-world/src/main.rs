@@ -1,4 +1,5 @@
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use std::env;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -16,13 +17,19 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // compile time environment variable
+    //let host: String = env!("RUST_SERVER_HOST").to_string();
+
+    // runtime environment variable
+    let host: String = env::var("RUST_SERVER_HOST").unwrap();
+
     HttpServer::new(|| {
         App::new()
             .service(hello)
             .service(echo)
             .route("/hey", web::get().to(manual_hello))
     })
-    .bind("127.0.0.1:55555")?
+    .bind(host)?
     .run()
     .await
 }
